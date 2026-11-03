@@ -1,0 +1,48 @@
+name: Daily dev journal
+
+on:
+  schedule:
+    - cron: "30 3 * * *"   # 03:30 UTC = 09:00 IST
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: daily-journal
+  cancel-in-progress: false
+
+jobs:
+  write:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Write today's entry
+        id: entry
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GEMINI_MODEL: ${{ vars.GEMINI_MODEL }}
+        run: python scripts/write_entry.py
+
+      - name: Commit and push
+        env:
+          DAY: ${{ steps.entry.outputs.day }}
+          TITLE: ${{ steps.entry.outputs.title }}
+        run: |
+          git config user.name "Nitish Singh"
+          git config user.email "theeditornitish@gmail.com"
+          git add journal README.md
+          if git diff --cached --quiet; then
+            echo "Nothing changed; skipping commit."
+            exit 0
+          fi
+          git commit -m "journal: Day ${DAY} - ${TITLE}"
+          git push
