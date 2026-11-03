@@ -10,9 +10,11 @@ offline entry from the facts in `topics.json`, so the workflow does not fail.
 ## Latest entries
 
 <!-- JOURNAL:START -->
-**Current streak:** 0 day(s) · **Total entries:** 0
+**Current streak:** 1 day(s) · **Total entries:** 1
 
-_No entries yet. The first one lands after the workflow runs._
+| Day | Date | Topic |
+|---:|---|---|
+| 1 | 2026-11-03 | [FastAPI dependency injection](journal/2026/11/2026-11-03.md) |
 <!-- JOURNAL:END -->
 
 ## How it works
