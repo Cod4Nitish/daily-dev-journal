@@ -4,6 +4,11 @@ on:
   schedule:
     - cron: "30 3 * * *"   # 03:30 UTC = 09:00 IST
   workflow_dispatch:
+    inputs:
+      note:
+        description: "Optional: your own thoughts / achievement for today (added to today's entry)"
+        required: false
+        default: ""
 
 permissions:
   contents: write
@@ -29,7 +34,10 @@ jobs:
         id: entry
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          GEMINI_MODEL: ${{ vars.GEMINI_MODEL }}
+          GEMINI_API_KEY_2: ${{ secrets.GEMINI_API_KEY_2 }}
+          GEMINI_API_KEY_3: ${{ secrets.GEMINI_API_KEY_3 }}
+          GEMINI_MODELS: ${{ vars.GEMINI_MODELS }}
+          JOURNAL_NOTE: ${{ github.event.inputs.note }}
         run: python scripts/write_entry.py
 
       - name: Commit and push
@@ -39,7 +47,7 @@ jobs:
         run: |
           git config user.name "Nitish Singh"
           git config user.email "theeditornitish@gmail.com"
-          git add journal README.md
+          git add journal thoughts README.md
           if git diff --cached --quiet; then
             echo "Nothing changed; skipping commit."
             exit 0

@@ -49,7 +49,14 @@ def day_number(cfg: dict, d: date) -> int:
 
 
 def offline_body(topic: dict) -> str:
-    facts = topic["facts"]
+    facts = topic.get("facts")
+    if not facts or not topic.get("snippet"):
+        return "\n".join([
+            f"Today's focus: **{topic['title']}** ({topic['category']}).",
+            "",
+            "No AI-written entry today (the generator was unavailable), so this is a short placeholder.",
+            "I will revisit this topic and add notes when I have time.",
+        ])
     lines = [
         f"Today I revisited **{topic['title']}** ({topic['category']}).",
         "",
@@ -64,15 +71,29 @@ def offline_body(topic: dict) -> str:
     return "\n".join(lines)
 
 
-def gemini_body(topic: dict, api_key: str) -> str | None:
-    model = os.environ.get("GEMINI_MODEL", "").strip() or "gemini-2.5-flash"
+DEFAULT_MODELS = "gemini-3.5-flash,gemini-3.1-flash-lite"
+
+
+def model_chain() -> list[str]:
+    """Models to try in order. GEMINI_MODELS (comma list) wins, then the old GEMINI_MODEL."""
+    raw = os.environ.get("GEMINI_MODELS", "").strip() or os.environ.get("GEMINI_MODEL", "").strip() or DEFAULT_MODELS
+    return [m.strip() for m in raw.split(",") if m.strip()]
+
+
+def api_keys() -> list[str]:
+    """GEMINI_API_KEY, GEMINI_API_KEY_2, GEMINI_API_KEY_3 ... (use keys from different Google projects)."""
+    names = ["GEMINI_API_KEY"] + [f"GEMINI_API_KEY_{i}" for i in range(2, 6)]
+    return [v for v in (os.environ.get(n, "").strip() for n in names) if v]
+
+
+def gemini_body(topic: dict, api_key: str, model: str) -> str | None:
     url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
     prompt = (
         f"Write a 'Today I learned' developer journal entry about: {topic['title']} "
         f"({topic['category']}). 120-180 words, first person, practical and specific. "
         "Include exactly one tiny fenced code snippet (max 8 lines) with a language tag. "
         "Markdown only. Do NOT include a top-level heading or a title line. "
-        f"Useful facts you may build on: {' '.join(topic['facts'])}"
+        f"Useful facts you may build on: {' '.join(topic.get('facts') or [])}"
     )
     payload = json.dumps({
         "contents": [{"parts": [{"text": prompt}]}],
@@ -86,7 +107,7 @@ def gemini_body(topic: dict, api_key: str) -> str | None:
         method="POST",
     )
     try:
-        with urllib.request.urlopen(req, timeout=60) as resp:
+        with urllib.request.urlopen(req, timeout=45) as resp:
             data = json.loads(resp.read().decode("utf-8"))
         parts = data["candidates"][0]["content"]["parts"]
         text = "".join(p.get("text", "") for p in parts).strip()
@@ -104,6 +125,40 @@ def gemini_body(topic: dict, api_key: str) -> str | None:
     return text
 
 
+THOUGHTS_DIR = ROOT / "thoughts"
+NOTE_MARK = "<!-- my-note -->"
+
+
+def thought_path(d: date) -> Path:
+    return THOUGHTS_DIR / f"{d.isoformat()}.md"
+
+
+def save_input_note(d: date) -> None:
+    """A note typed into the workflow_dispatch form (e.g. from the GitHub phone app)."""
+    note = os.environ.get("JOURNAL_NOTE", "").strip()
+    if not note:
+        return
+    p = thought_path(d)
+    p.parent.mkdir(parents=True, exist_ok=True)
+    old = p.read_text(encoding="utf-8").rstrip() + "\n\n" if p.exists() else ""
+    p.write_text(old + note + "\n", encoding="utf-8", newline="\n")
+    print(f"Saved note to {p.relative_to(ROOT).as_posix()}")
+
+
+def apply_thoughts(path: Path, d: date) -> bool:
+    """Append the owner's own note for this date (thoughts/YYYY-MM-DD.md) once."""
+    tp = thought_path(d)
+    if not tp.exists() or not path.exists():
+        return False
+    text = path.read_text(encoding="utf-8")
+    note = tp.read_text(encoding="utf-8").strip()
+    if not note or NOTE_MARK in text:
+        return False
+    path.write_text(text.rstrip() + f"\n\n{NOTE_MARK}\n## My note\n\n{note}\n", encoding="utf-8", newline="\n")
+    print("Added owner note to entry.")
+    return True
+
+
 def entry_path(d: date) -> Path:
     return JOURNAL_DIR / f"{d:%Y}" / f"{d:%m}" / f"{d.isoformat()}.md"
 
@@ -119,14 +174,21 @@ def write_entry(cfg: dict, d: date) -> tuple[Path, int, str, bool]:
         print(f"Entry already exists for {d}: {path.relative_to(ROOT).as_posix()} (no change)")
         return path, n, title, False
 
-    key = os.environ.get("GEMINI_API_KEY", "").strip()
+    keys = api_keys()
     body, source = None, "offline"
-    if key:
-        body = gemini_body(topic, key)
-        if body:
-            source = "gemini"
+    if keys:
+        # Try every model on key 1, then key 2, ... (a failed key or retired model just moves on).
+        for ki, key in enumerate(keys, 1):
+            for model in model_chain():
+                print(f"Trying key #{ki}, model {model} ...")
+                body = gemini_body(topic, key, model)
+                if body:
+                    source = "gemini"
+                    break
+            if body:
+                break
     else:
-        print("GEMINI_API_KEY not set; using offline entry.")
+        print("No GEMINI_API_KEY set; using offline entry.")
     if not body:
         body = offline_body(topic)
 
@@ -197,7 +259,9 @@ def update_readme(d: date) -> bool:
 def main() -> int:
     cfg = load_config()
     d = today()
-    _, n, title, _ = write_entry(cfg, d)
+    save_input_note(d)
+    path, n, title, _ = write_entry(cfg, d)
+    apply_thoughts(path, d)
     update_readme(d)
     out = os.environ.get("GITHUB_OUTPUT")
     if out:

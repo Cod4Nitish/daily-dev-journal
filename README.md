@@ -57,3 +57,10 @@ specific date.
 - **Honesty:** the entries are short, real notes, and the README says plainly that they are
   automated. Read them, edit them, and add your own. The streak means the most when you
   actually learn the thing.
+
+## Year plan, your own notes, and fallbacks
+
+- `topics.json` holds a 365-day plan (rich topics first, then one planned topic per day). The day number comes from `start_date`.
+- **Your own thoughts:** add `thoughts/YYYY-MM-DD.md` any time (you can pre-write 30 or 60 days). It is appended to that day's entry under "My note". Or start the workflow by hand and type a note in the `note` box (works from the GitHub phone app).
+- **Model fallback:** `GEMINI_MODELS` (repo variable, comma list) is tried in order; default `gemini-3.5-flash,gemini-3.1-flash-lite`. Extra keys `GEMINI_API_KEY_2`, `GEMINI_API_KEY_3` (secrets, ideally from different Google projects) are tried when a key fails. If everything fails the entry is a short offline placeholder, so the day is never skipped.
+- Secrets live only in GitHub Actions secrets, never in files.
