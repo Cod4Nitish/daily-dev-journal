@@ -10,10 +10,11 @@ offline entry from the facts in `topics.json`, so the workflow does not fail.
 ## Latest entries
 
 <!-- JOURNAL:START -->
-**Current streak:** 3 day(s) · **Total entries:** 3
+**Current streak:** 4 day(s) · **Total entries:** 4
 
 | Day | Date | Topic |
 |---:|---|---|
+| 3 | 2026-11-06 | [Pydantic v2 validators](journal/2026/11/2026-11-06.md) |
 | 2 | 2026-11-05 | [FastAPI background tasks](journal/2026/11/2026-11-05.md) |
 | 1 | 2026-11-04 | [FastAPI dependency injection](journal/2026/11/2026-11-04.md) |
 | 1 | 2026-11-03 | [FastAPI dependency injection](journal/2026/11/2026-11-03.md) |
