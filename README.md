@@ -10,10 +10,11 @@ offline entry from the facts in `topics.json`, so the workflow does not fail.
 ## Latest entries
 
 <!-- JOURNAL:START -->
-**Current streak:** 5 day(s) · **Total entries:** 5
+**Current streak:** 6 day(s) · **Total entries:** 6
 
 | Day | Date | Topic |
 |---:|---|---|
+| 5 | 2026-11-08 | [Hybrid search for RAG](journal/2026/11/2026-11-08.md) |
 | 4 | 2026-11-07 | [RAG chunking strategies](journal/2026/11/2026-11-07.md) |
 | 3 | 2026-11-06 | [Pydantic v2 validators](journal/2026/11/2026-11-06.md) |
 | 2 | 2026-11-05 | [FastAPI background tasks](journal/2026/11/2026-11-05.md) |
