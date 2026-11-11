@@ -10,17 +10,17 @@ offline entry from the facts in `topics.json`, so the workflow does not fail.
 ## Latest entries
 
 <!-- JOURNAL:START -->
-**Current streak:** 8 day(s) · **Total entries:** 8
+**Current streak:** 9 day(s) · **Total entries:** 9
 
 | Day | Date | Topic |
 |---:|---|---|
+| 8 | 2026-11-11 | [LLM tool calling](journal/2026/11/2026-11-11.md) |
 | 7 | 2026-11-10 | [Prompt engineering: structured output](journal/2026/11/2026-11-10.md) |
 | 6 | 2026-11-09 | [Evaluating RAG pipelines](journal/2026/11/2026-11-09.md) |
 | 5 | 2026-11-08 | [Hybrid search for RAG](journal/2026/11/2026-11-08.md) |
 | 4 | 2026-11-07 | [RAG chunking strategies](journal/2026/11/2026-11-07.md) |
 | 3 | 2026-11-06 | [Pydantic v2 validators](journal/2026/11/2026-11-06.md) |
 | 2 | 2026-11-05 | [FastAPI background tasks](journal/2026/11/2026-11-05.md) |
-| 1 | 2026-11-04 | [FastAPI dependency injection](journal/2026/11/2026-11-04.md) |
 <!-- JOURNAL:END -->
 
 ## How it works
