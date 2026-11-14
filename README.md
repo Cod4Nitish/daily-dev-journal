@@ -10,17 +10,17 @@ offline entry from the facts in `topics.json`, so the workflow does not fail.
 ## Latest entries
 
 <!-- JOURNAL:START -->
-**Current streak:** 11 day(s) · **Total entries:** 11
+**Current streak:** 12 day(s) · **Total entries:** 12
 
 | Day | Date | Topic |
 |---:|---|---|
+| 11 | 2026-11-14 | [React useMemo vs useCallback](journal/2026/11/2026-11-14.md) |
 | 10 | 2026-11-13 | [React useEffect cleanup](journal/2026/11/2026-11-13.md) |
 | 9 | 2026-11-12 | [Agent loops and stop conditions](journal/2026/11/2026-11-12.md) |
 | 8 | 2026-11-11 | [LLM tool calling](journal/2026/11/2026-11-11.md) |
 | 7 | 2026-11-10 | [Prompt engineering: structured output](journal/2026/11/2026-11-10.md) |
 | 6 | 2026-11-09 | [Evaluating RAG pipelines](journal/2026/11/2026-11-09.md) |
 | 5 | 2026-11-08 | [Hybrid search for RAG](journal/2026/11/2026-11-08.md) |
-| 4 | 2026-11-07 | [RAG chunking strategies](journal/2026/11/2026-11-07.md) |
 <!-- JOURNAL:END -->
 
 ## How it works
