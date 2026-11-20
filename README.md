@@ -10,17 +10,17 @@ offline entry from the facts in `topics.json`, so the workflow does not fail.
 ## Latest entries
 
 <!-- JOURNAL:START -->
-**Current streak:** 17 day(s) · **Total entries:** 17
+**Current streak:** 18 day(s) · **Total entries:** 18
 
 | Day | Date | Topic |
 |---:|---|---|
+| 17 | 2026-11-20 | [System design: rate limiting](journal/2026/11/2026-11-20.md) |
 | 16 | 2026-11-19 | [System design: caching](journal/2026/11/2026-11-19.md) |
 | 15 | 2026-11-18 | [Git worktrees](journal/2026/11/2026-11-18.md) |
 | 14 | 2026-11-17 | [Git bisect](journal/2026/11/2026-11-17.md) |
 | 13 | 2026-11-16 | [Git interactive staging](journal/2026/11/2026-11-16.md) |
 | 12 | 2026-11-15 | [Custom React hooks](journal/2026/11/2026-11-15.md) |
 | 11 | 2026-11-14 | [React useMemo vs useCallback](journal/2026/11/2026-11-14.md) |
-| 10 | 2026-11-13 | [React useEffect cleanup](journal/2026/11/2026-11-13.md) |
 <!-- JOURNAL:END -->
 
 ## How it works
