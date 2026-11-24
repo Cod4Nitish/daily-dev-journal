@@ -10,17 +10,17 @@ offline entry from the facts in `topics.json`, so the workflow does not fail.
 ## Latest entries
 
 <!-- JOURNAL:START -->
-**Current streak:** 21 day(s) · **Total entries:** 21
+**Current streak:** 22 day(s) · **Total entries:** 22
 
 | Day | Date | Topic |
 |---:|---|---|
+| 21 | 2026-11-24 | [Kotlin coroutines and Flow](journal/2026/11/2026-11-24.md) |
 | 20 | 2026-11-23 | [Compose side effects](journal/2026/11/2026-11-23.md) |
 | 19 | 2026-11-22 | [Jetpack Compose state hoisting](journal/2026/11/2026-11-22.md) |
 | 18 | 2026-11-21 | [System design: idempotency keys](journal/2026/11/2026-11-21.md) |
 | 17 | 2026-11-20 | [System design: rate limiting](journal/2026/11/2026-11-20.md) |
 | 16 | 2026-11-19 | [System design: caching](journal/2026/11/2026-11-19.md) |
 | 15 | 2026-11-18 | [Git worktrees](journal/2026/11/2026-11-18.md) |
-| 14 | 2026-11-17 | [Git bisect](journal/2026/11/2026-11-17.md) |
 <!-- JOURNAL:END -->
 
 ## How it works
