@@ -10,17 +10,17 @@ offline entry from the facts in `topics.json`, so the workflow does not fail.
 ## Latest entries
 
 <!-- JOURNAL:START -->
-**Current streak:** 25 day(s) · **Total entries:** 25
+**Current streak:** 26 day(s) · **Total entries:** 26
 
 | Day | Date | Topic |
 |---:|---|---|
+| 25 | 2026-11-28 | [DSA pattern: sliding window](journal/2026/11/2026-11-28.md) |
 | 24 | 2026-11-27 | [Security basics: JWT pitfalls](journal/2026/11/2026-11-27.md) |
 | 23 | 2026-11-26 | [Security basics: SQL injection](journal/2026/11/2026-11-26.md) |
 | 22 | 2026-11-25 | [Security basics: password hashing](journal/2026/11/2026-11-25.md) |
 | 21 | 2026-11-24 | [Kotlin coroutines and Flow](journal/2026/11/2026-11-24.md) |
 | 20 | 2026-11-23 | [Compose side effects](journal/2026/11/2026-11-23.md) |
 | 19 | 2026-11-22 | [Jetpack Compose state hoisting](journal/2026/11/2026-11-22.md) |
-| 18 | 2026-11-21 | [System design: idempotency keys](journal/2026/11/2026-11-21.md) |
 <!-- JOURNAL:END -->
 
 ## How it works
